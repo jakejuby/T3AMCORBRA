@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import model.data.BedsideData;
+
 /**
  * @author Knoxie
  * 
@@ -17,12 +19,13 @@ import javax.swing.JTable;
 public class PatientPanel extends JPanel {
 
 	private JTable patientInfoTable;
-
+	
 	/**
 	 * @param layout
 	 */
 	public PatientPanel(LayoutManager layout) {
 		super(layout);
+				
 		JPanel callNursePanel = new JPanel();
 		add(callNursePanel);
 		callNursePanel.setLayout(new GridLayout(0, 1, 0, 0));

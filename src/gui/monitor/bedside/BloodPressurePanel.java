@@ -13,29 +13,37 @@ import javax.swing.SwingConstants;
 
 /**
  * @author Knoxie
- *
+ * 
  */
 public class BloodPressurePanel extends JPanel {
+	private JPanel labelButtonWrapper;
+	private JButton setAlarms;
+	private JLabel bloodPressureLabel;
+	private JLabel currentPressure;
 
 	/**
 	 * @param layout
 	 */
 	public BloodPressurePanel(LayoutManager layout) {
 		super(layout);
-		JPanel labelButtonWrapper4 = new JPanel();
-		add(labelButtonWrapper4);
-		labelButtonWrapper4.setLayout(new GridLayout(2, 2, 2, 2));
+		labelButtonWrapper = new JPanel();
+		add(labelButtonWrapper);
+		labelButtonWrapper.setLayout(new GridLayout(2, 2, 2, 2));
 
-		JLabel label_3 = new JLabel("Blood Pressure: ");
-		label_3.setHorizontalAlignment(SwingConstants.CENTER);
-		labelButtonWrapper4.add(label_3);
+		bloodPressureLabel = new JLabel("Blood Pressure: ");
+		bloodPressureLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		labelButtonWrapper.add(bloodPressureLabel);
 
-		JButton button_1 = new JButton("Set Alarms");
-		labelButtonWrapper4.add(button_1);
+		setAlarms = new JButton("Set Alarms");
+		labelButtonWrapper.add(setAlarms);
 
-		JLabel label_4 = new JLabel("--Pressure--");
-		add(label_4);
+		currentPressure = new JLabel("--Pressure--");
+		add(currentPressure);
 	}
 
+	public void setBloodPressureDisplay(String value) {
+		currentPressure.setText(value);
+
+	}
 
 }
