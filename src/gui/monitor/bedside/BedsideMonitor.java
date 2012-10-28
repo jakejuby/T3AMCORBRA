@@ -1,22 +1,18 @@
 package gui.monitor.bedside;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.JTable;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JScrollPane;
+
+import model.data.BedsideData;
 
 public class BedsideMonitor {
 
 	private JFrame frame;
 	private PatientPanel patientPanel;
+	private BedsideData patientData;
 
 	/**
 	 * Launch the application.
@@ -38,6 +34,8 @@ public class BedsideMonitor {
 	 * Create the application.
 	 */
 	public BedsideMonitor() {
+		patientData = new BedsideData();
+
 		initialize();
 	}
 
@@ -54,7 +52,7 @@ public class BedsideMonitor {
 
 		frame.getContentPane().add(patientPanel, BorderLayout.WEST);
 
-		VitalInfopanel vitalInfopanel = new VitalInfopanel(new GridLayout(0, 1, 0, 0));
+		VitalInfopanel vitalInfopanel = new VitalInfopanel(new GridLayout(0, 1, 0, 0), patientData);
 		frame.getContentPane().add(vitalInfopanel, BorderLayout.CENTER);
 		
 		
