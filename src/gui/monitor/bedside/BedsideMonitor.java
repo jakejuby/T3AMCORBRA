@@ -3,17 +3,27 @@ package gui.monitor.bedside;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
 
 import javax.swing.JFrame;
 
 import model.data.BedsideData;
+import model.data.BedsideData.PropertyName;
+import monitor.bedside.UpdateTask;
+import monitor.shared.DataProvider;
+import monitor.shared.DataReceiver;
 
-public class BedsideMonitor {
+public class BedsideMonitor implements DataProvider {
 
 	private JFrame frame;
 	private PatientPanel patientPanel;
 	private BedsideData patientData;
-
+	private List<String> sensors;
+	private Map<DataReceiver, Timer> updaters;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -36,6 +46,12 @@ public class BedsideMonitor {
 	public BedsideMonitor() {
 		patientData = new BedsideData();
 
+		for(PropertyName p : PropertyName.values()) {
+			sensors.add(p.toString());
+		}
+		
+		updaters = new HashMap<DataReceiver, Timer>();
+		
 		initialize();
 	}
 
@@ -57,6 +73,29 @@ public class BedsideMonitor {
 		
 		
 
+	}
+
+	public BedsideData getData() {
+		return patientData;
+	}
+
+	@Override
+	public List<String> getSensors() {
+		return sensors;
+	}
+
+	@Override
+	public void subscribe(Map<String, Integer> subscription, DataReceiver to) {
+		if( updaters.keySet().contains(to) ) {
+			updaters.get(to).cancel();
+		}
+		
+		Timer t = new Timer();
+		for( String s : subscription.keySet() ) {
+			t.schedule(new UpdateTask(), 0, subscription.get(s));
+		}
+		
+		updaters.put(to, t);
 	}
 
 }
