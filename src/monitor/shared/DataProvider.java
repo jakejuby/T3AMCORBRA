@@ -13,7 +13,7 @@ public interface DataProvider extends Remote {
 	 * 						update period in seconds
 	 * @param to - the dataprovider to send the updates to
 	 */
-	void subscribe(Map<String, Integer> subscription, DataReceiver to) 
+	void subscribe(Map<String, Integer> subscription) 
 		throws RemoteException;
 	
 	/**

@@ -18,10 +18,8 @@ public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected NurseStation() throws RemoteException {
+	public NurseStation() throws RemoteException {
 		super();
-		
-		
 	}
 
 	@Override
@@ -50,7 +48,7 @@ public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 	@Override
 	public void addDataProvider(String bedside, DataProvider monitor) {
 		try {
-			monitor.subscribe(defaultSubscriptio(monitor.getSensors()), this);
+			monitor.subscribe(defaultSubscriptio(monitor.getSensors()));
 			monitors.put(bedside, monitor);
 		} catch (RemoteException e) {
 			e.printStackTrace();
