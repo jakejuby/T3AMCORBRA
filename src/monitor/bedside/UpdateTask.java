@@ -31,7 +31,7 @@ public class UpdateTask extends Thread {
 			for(String s : subscription.keySet()) {
 				// if we have slept subscription number of seconds since the last transmission, add the value
 				// to the update.
-				if( (counter & 0xFFFF) % subscription.get(s) == 0 ) {
+				if( (counter & 0xFFFF) != 0 && (counter & 0xFFFF) % subscription.get(s) == 0 ) {
 					if( s.equals("HeartBeat") ) {
 						values.put(s, BedsideData.getHeartBeatHistory().get(BedsideData.getHeartBeatHistory().size() - 1));
 					} else if( s.equals("BloodPressure") ) {
@@ -43,7 +43,9 @@ public class UpdateTask extends Thread {
 			}
 
 			try {
-				to.dataUpdate(name, values);
+				//if theres updates to send; send it
+				if( !values.keySet().isEmpty() )
+					to.dataUpdate(name, values);
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}

@@ -39,7 +39,9 @@ public class BedsideData {
 	}
 
 	public void addHeartBeatValue(String newVal) {
-		String oldVal = hearbeatHistory.get(hearbeatHistory.size() - 1);
+		String oldVal = "";
+		if( hearbeatHistory.size() != 0 )
+			oldVal = hearbeatHistory.get(hearbeatHistory.size() - 1);
 		hearbeatHistory.add(newVal);
 		if (hearbeatHistory.size() > maxHeartbeatHistoryVals) {
 			hearbeatHistory.remove(0);
@@ -48,7 +50,9 @@ public class BedsideData {
 	}
 
 	public void addBloodPressureValue(String newVal) {
-		String oldVal = bloodPressureHistory.get(bloodPressureHistory.size() - 1);
+		String oldVal = "";
+		if( bloodPressureHistory.size() != 0)
+			oldVal = bloodPressureHistory.get(bloodPressureHistory.size() - 1);
 		bloodPressureHistory.add(newVal);
 		if (bloodPressureHistory.size() > maxBloodPressureHistoryVals) {
 			bloodPressureHistory.remove(0);
@@ -57,7 +61,9 @@ public class BedsideData {
 	}
 
 	public void addRespiratoryRateValue(String newVal) {
-		String oldVal = respiratoryRateHistory.get(respiratoryRateHistory.size() - 1);
+		String oldVal = "";
+		if( respiratoryRateHistory.size() != 0 )
+			oldVal = respiratoryRateHistory.get(respiratoryRateHistory.size() - 1);
 		respiratoryRateHistory.add(newVal);
 		if (respiratoryRateHistory.size() > maxRespiratoryRateHistoryVals) {
 			respiratoryRateHistory.remove(0);

@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
-import monitor.nurse.NurseStation;
+import monitor.nurse.*;
 
 public class NurseTestMain {
 
