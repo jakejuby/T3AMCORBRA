@@ -1,10 +1,13 @@
 package monitor.shared;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.Map;
 
-public interface DataReceiver {
+public interface DataReceiver extends Remote {
 
-	void setAlarm(DataProvider from, String message);
+	void setAlarm(DataProvider from, String message) 
+		throws RemoteException;
 	
 	/**
 	 * send a data update to the DataReceiver; coarse grained interface
@@ -12,17 +15,20 @@ public interface DataReceiver {
 	 * of the sensor updating data with an integer value to update with.
 	 * @param values the message containing the data update.
 	 */
-	void dataUpdate(Map<String, Integer> values);
+	void dataUpdate(Map<String, String> values)
+		throws RemoteException;
 	
 	/**
 	 * Eliminate the alarm/call condition.
 	 * @param from - the bedside monitor clearing the alarm/call
 	 */
-	void clearAlarm(DataProvider from);
+	void clearAlarm(DataProvider from)
+		throws RemoteException;
 	
 	/**
 	 * Add a new DataProvider to watch and configure to.
 	 * @param monitor - the data provider for the receiver to observe
 	 */
-	void addDataProvider(DataProvider monitor);
+	void addDataProvider(DataProvider monitor)
+		throws RemoteException;
 }
