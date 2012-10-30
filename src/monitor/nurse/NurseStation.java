@@ -3,17 +3,15 @@ package monitor.nurse;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import monitor.shared.DataProvider;
 import monitor.shared.DataReceiver;
 
 public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 
-	private Set<DataProvider> monitors = new HashSet<DataProvider>();
+	private Map<String, DataProvider> monitors = new HashMap<String, DataProvider>();
 	
 	/**
 	 * 
@@ -27,33 +25,33 @@ public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 	}
 
 	@Override
-	public void setAlarm(DataProvider from, String message)  {
-		// TODO Auto-generated method stub
-		
+	public void setAlarm(String from, String message)  {
+		System.out.println(" Alarm from: " + from + "   Reads: " + message);
 	}
 
 	@Override
-	public void dataUpdate(Map<String, String> values) {
-		// TODO Auto-generated method stub
-		
+	public void dataUpdate(String bedside, Map<String, String> values) {
+		System.out.println("Bedside Monitor Update: " + bedside);
+		for(String s : values.keySet()) {
+			System.out.println("Sensor " + s + " reads: " + values.get(s));
+		}
 	}
 
 	@Override
-	public void clearAlarm(DataProvider from) {
-		// TODO Auto-generated method stub
-		
+	public void clearAlarm(String from) {
+		System.out.println("Alarm cleared from: " + from);
 	}
-
+	
 	/**
 	 * adds a data provider to the list and subscribes to the sensors if possible.
 	 * 
 	 * @param monitor - the data provider being observed.
 	 */
 	@Override
-	public void addDataProvider(DataProvider monitor) {
+	public void addDataProvider(String bedside, DataProvider monitor) {
 		try {
 			monitor.subscribe(defaultSubscriptio(monitor.getSensors()), this);
-			monitors.add(monitor);
+			monitors.put(bedside, monitor);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

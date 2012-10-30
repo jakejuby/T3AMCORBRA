@@ -13,10 +13,12 @@ public class UpdateTask extends Thread {
 	private Map<String, Integer> subscription;
 	private DataReceiver to;
 	private int counter;
+	private String name;
 	
-	public UpdateTask(Map<String, Integer> subscription, DataReceiver to) {
+	public UpdateTask(String name, Map<String, Integer> subscription, DataReceiver to) {
 		this.subscription = subscription;
 		this.to = to;
+		this.name = name;
 		cancel = false;
 		
 		this.start();
@@ -41,7 +43,7 @@ public class UpdateTask extends Thread {
 			}
 
 			try {
-				to.dataUpdate(values);
+				to.dataUpdate(name, values);
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}

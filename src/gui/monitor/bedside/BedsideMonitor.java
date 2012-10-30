@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,7 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 	public BedsideMonitor() throws RemoteException {
 		patientData = new BedsideData();
 
+		sensors = new ArrayList<String>();
 		for(PropertyName p : PropertyName.values()) {
 			sensors.add(p.toString());
 		}
@@ -86,6 +88,6 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 		if(updateTask != null)
 			updateTask.cancel();
 		
-		updateTask = new UpdateTask(subscription, to);
+		updateTask = new UpdateTask(this.toString(), subscription, to);
 	}
 }
