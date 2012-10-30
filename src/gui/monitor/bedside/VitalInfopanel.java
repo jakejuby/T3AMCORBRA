@@ -52,17 +52,13 @@ public class VitalInfopanel extends JPanel implements PropertyChangeListener {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		switch (evt.getPropertyName()) {
-		case "HeartBeat":
+		if( evt.getPropertyName().equals("HeartBeat") ) {
 			heartBeatPanel.setHeartBeatDisplay(evt.getNewValue().toString());
-			break;
-		case "BloodPressure":
+		} else if( evt.getPropertyName().equals("BloodPressure") ) {
 			bloodPressurePanel.setBloodPressureDisplay(evt.getNewValue().toString());
-			break;
-		case "RespiratoryRate":
+		} else if ( evt.getPropertyName().equals("RespiratoryRate")  ) {
 			respPanel.setRespiratoryRateDisplay(evt.getNewValue().toString());
-			break;
-		default:
+		} else {
 			System.out.println("No property action found.");
 		}
 

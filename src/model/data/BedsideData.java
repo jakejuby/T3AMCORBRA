@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class BedsideData {
 
-	private static ArrayList<String> hearbeatHistory = new ArrayList<>();
-	private static ArrayList<String> bloodPressureHistory = new ArrayList<>();
-	private static ArrayList<String> respiratoryRateHistory = new ArrayList<>();
+	private static ArrayList<String> hearbeatHistory = new ArrayList<String>();
+	private static ArrayList<String> bloodPressureHistory = new ArrayList<String>();
+	private static ArrayList<String> respiratoryRateHistory = new ArrayList<String>();
 
 	private int maxHeartbeatHistoryVals = 20;
 	private int maxBloodPressureHistoryVals = 20;
