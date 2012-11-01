@@ -6,4 +6,13 @@ public class AlarmHandler {
 
 	}
 
+	public void generateAlarm(){
+
+
+	}
+
+	public void generateCall(){
+		
+	}
+
 }
