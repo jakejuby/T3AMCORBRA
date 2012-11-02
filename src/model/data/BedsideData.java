@@ -14,9 +14,9 @@ import java.util.ArrayList;
  */
 public class BedsideData {
 
-	private static ArrayList<String> hearbeatHistory = new ArrayList<String>();
-	private static ArrayList<String> bloodPressureHistory = new ArrayList<String>();
-	private static ArrayList<String> respiratoryRateHistory = new ArrayList<String>();
+	private ArrayList<String> hearbeatHistory = new ArrayList<String>();
+	private ArrayList<String> bloodPressureHistory = new ArrayList<String>();
+	private ArrayList<String> respiratoryRateHistory = new ArrayList<String>();
 
 	private int maxHeartbeatHistoryVals = 20;
 	private int maxBloodPressureHistoryVals = 20;
@@ -26,21 +26,21 @@ public class BedsideData {
 		HeartBeat, BloodPressure, RespiratoryRate;
 	}
 
-	public static ArrayList<String> getHeartBeatHistory() {
+	public ArrayList<String> getHeartBeatHistory() {
 		return hearbeatHistory;
 	}
 
-	public static ArrayList<String> getBloodPressureHistory() {
+	public ArrayList<String> getBloodPressureHistory() {
 		return bloodPressureHistory;
 	}
 
-	public static ArrayList<String> getRespiratoryRateHistory() {
+	public ArrayList<String> getRespiratoryRateHistory() {
 		return respiratoryRateHistory;
 	}
 
 	public void addHeartBeatValue(String newVal) {
 		String oldVal = "";
-		if( hearbeatHistory.size() != 0 )
+		if (hearbeatHistory.size() != 0)
 			oldVal = hearbeatHistory.get(hearbeatHistory.size() - 1);
 		hearbeatHistory.add(newVal);
 		if (hearbeatHistory.size() > maxHeartbeatHistoryVals) {
@@ -51,7 +51,7 @@ public class BedsideData {
 
 	public void addBloodPressureValue(String newVal) {
 		String oldVal = "";
-		if( bloodPressureHistory.size() != 0)
+		if (bloodPressureHistory.size() != 0)
 			oldVal = bloodPressureHistory.get(bloodPressureHistory.size() - 1);
 		bloodPressureHistory.add(newVal);
 		if (bloodPressureHistory.size() > maxBloodPressureHistoryVals) {
@@ -62,7 +62,7 @@ public class BedsideData {
 
 	public void addRespiratoryRateValue(String newVal) {
 		String oldVal = "";
-		if( respiratoryRateHistory.size() != 0 )
+		if (respiratoryRateHistory.size() != 0)
 			oldVal = respiratoryRateHistory.get(respiratoryRateHistory.size() - 1);
 		respiratoryRateHistory.add(newVal);
 		if (respiratoryRateHistory.size() > maxRespiratoryRateHistoryVals) {
