@@ -10,18 +10,20 @@ import model.data.BedsideData;
 import monitor.shared.DataReceiver;
 
 public class UpdateTask extends Thread {
-
+	
 	private boolean cancel;
 	private Map<String, Integer> subscription;
 	private DataReceiver to;
+	private BedsideMonitor self;
 	private int counter;
-	private String name;
+	private int clearAlarm;
 	
-	public UpdateTask(String name, Map<String, Integer> subscription, DataReceiver to) {
+	public UpdateTask(BedsideMonitor self, Map<String, Integer> subscription, DataReceiver to, int autoClearAlarm) {
 		this.subscription = subscription;
 		this.to = to;
-		this.name = name;
 		cancel = false;
+		this.self = self;
+		clearAlarm = autoClearAlarm;
 		
 		this.start();
 	}
@@ -31,24 +33,32 @@ public class UpdateTask extends Thread {
 		Map<String, String> values = new HashMap<String, String>();
 		while(!cancel) {
 			for(String s : subscription.keySet()) {
-				BedsideMonitor temp = ((BedsideMonitor)to);
 				// if we have slept subscription number of seconds since the last transmission, add the value
 				// to the update.
 				if( (counter & 0xFFFF) != 0 && (counter & 0xFFFF) % subscription.get(s) == 0 ) {
-					if( s.equals(BedsideData.PropertyName.HeartBeat) ) {
-						values.put(s, temp.getData().getHeartBeatHistory().get(temp.getData().getHeartBeatHistory().size() - 1));
-					} else if( s.equals(BedsideData.PropertyName.BloodPressure) ) {
-						values.put(s, temp.getData().getBloodPressureHistory().get(temp.getData().getBloodPressureHistory().size() - 1));
-					} else if ( s.equals(BedsideData.PropertyName.RespiratoryRate)  ) {
-						values.put(s, temp.getData().getRespiratoryRateHistory().get(temp.getData().getRespiratoryRateHistory().size() - 1));
+					if( s.equals(BedsideData.PropertyName.HeartBeat.toString()) ) {
+						values.put(s, self.getData().getHeartBeatHistory().get(self.getData().getHeartBeatHistory().size() - 1));
+					} else if( s.equals(BedsideData.PropertyName.BloodPressure.toString()) ) {
+						values.put(s, self.getData().getBloodPressureHistory().get(self.getData().getBloodPressureHistory().size() - 1));
+					} else if ( s.equals(BedsideData.PropertyName.RespiratoryRate.toString())  ) {
+						values.put(s, self.getData().getRespiratoryRateHistory().get(self.getData().getRespiratoryRateHistory().size() - 1));
 					}
 				}
 			}
 
+//			if( clearAlarm > 0 && (counter & 0xFFFF) != 0 && (counter & 0xFFFF) % clearAlarm == 0 ) {
+//				try {
+//					to.clearAlarm(self.toString());
+//				} catch (RemoteException e) {
+//					e.printStackTrace();
+//				}
+//			}
+			
 			try {
 				//if theres updates to send; send it
-				if( !values.keySet().isEmpty() )
-					to.dataUpdate(name, values);
+				if( !values.keySet().isEmpty() ) {
+					to.dataUpdate(self.toString(), values);
+				}
 			} catch (RemoteException e1) {
 				e1.printStackTrace();
 			}

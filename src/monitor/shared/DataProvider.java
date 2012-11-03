@@ -5,6 +5,12 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Inter face for a DataProvider; it has a list of sensors which can
+ * be subscribed to at whatever update interval desired.
+ * 
+ * @author jeff
+ */
 public interface DataProvider extends Remote {
 
 	/**

@@ -6,6 +6,10 @@ import java.rmi.RemoteException;
 
 import monitor.nurse.*;
 
+/**
+ * Test main for starting a nurse's station and waiting for bedside monitors to connect.
+ * @author jeff
+ */
 public class NurseTestMain {
 
 	public static void main(String[] args) {

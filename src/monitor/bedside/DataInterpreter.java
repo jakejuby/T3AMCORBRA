@@ -1,7 +1,12 @@
 package monitor.bedside;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 
+/**
+ * Determines if readings are out of range; generates alarms with some kind of
+ * algorithm.
+ */
 public class DataInterpreter {
 	// Maps to hold onto our ranges for our measurements.
 	private HashMap<String,String> heartRateRange;
@@ -10,14 +15,18 @@ public class DataInterpreter {
 	
 	private AlarmHandler alarmHandler;
 	
+	public static final String LOWER_BOUND_KEY = "lowerBound";
+	public static final String UPPER_BOUND_KEY = "upperBound";
+	public static final String BUFFER_KEY = "bufferCounter";
+	
 	/**
 	 * Creates the DataInterpreter corresponding to the patient's bed.
 	 */
-	public DataInterpreter(){
+	public DataInterpreter(AlarmHandler alarms){
 		heartRateRange = new HashMap<String,String>();
 		respRateRange = new HashMap<String,String>();
 		bpRange = new HashMap<String,String>();
-		alarmHandler = new AlarmHandler();
+		alarmHandler = alarms;
 	}
 	
 	/**
@@ -26,14 +35,15 @@ public class DataInterpreter {
 	 * cause an alarm to be sent to the nurse's station.
 	 * 
 	 * @param heartRate
+	 * @throws RemoteException 
 	 */
-	public void checkHeartRate(String heartRate){
+	public void checkHeartRate(String heartRate) throws RemoteException{
 		// upper and lower bound
-		int lowerBound = Integer.parseInt(heartRateRange.get("lowerBound"));
-		int upperBound = Integer.parseInt(heartRateRange.get("upperBound"));
+		int lowerBound = Integer.parseInt(heartRateRange.get(LOWER_BOUND_KEY));
+		int upperBound = Integer.parseInt(heartRateRange.get(UPPER_BOUND_KEY));
 		
 		// counter to keep track of how long we are in the buffer region.
-		int bufferCounter = Integer.parseInt(heartRateRange.get("bufferCounter"));
+		int bufferCounter = Integer.parseInt(heartRateRange.get(BUFFER_KEY));
 		
 		int currentRate = Integer.parseInt(heartRate);
 		
@@ -50,14 +60,14 @@ public class DataInterpreter {
 					// generate a level1 alarm
 					alarmHandler.generateAlarm(1,"Heart Rate","low");
 					bufferCounter++;
-					heartRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+					heartRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 				}
 				// else you need to generate a level2 alarm after having 5 consecutive buffer
 				// range measurements.
 				else {
 					alarmHandler.generateAlarm(2, "Heart Rate", "low");
 					bufferCounter = 0;
-					heartRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+					heartRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 				}
 				
 			}
@@ -65,7 +75,7 @@ public class DataInterpreter {
 			else {
 				alarmHandler.generateAlarm(3, "Heart Rate", "low");
 				bufferCounter = 0;
-				heartRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+				heartRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 			}
 			
 		}
@@ -81,27 +91,27 @@ public class DataInterpreter {
 					// generate a level1 alarm
 					alarmHandler.generateAlarm(1, "Heart Rate", "high");
 					bufferCounter++;
-					heartRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+					heartRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 				}
 				// else you need to generate level2 alarm after having 5 consecutive buffer
 				// range measurements.
 				else {
 					alarmHandler.generateAlarm(2,"Heart Rate","high");
 					bufferCounter = 0;
-					heartRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+					heartRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 				}
 			}
 			// you are outside of the buffer range and too high, so generate a level3 alarm.
 			else {
 				alarmHandler.generateAlarm(3, "Heart Rate","high");
 				bufferCounter = 0;
-				heartRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+				heartRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 			}
 		}
 		// you have a normal heart rate measurement, make sure you reset the buffer
 		else {
 			bufferCounter = 0;
-			heartRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+			heartRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 		}
 		
 	}
@@ -113,11 +123,12 @@ public class DataInterpreter {
 	 * cause an alarm to be sent to the nurse's station.
 	 * 
 	 * @param respRate
+	 * @throws RemoteException 
 	 */
-	public void checkRespiratoryRate(String respRate){
-		int lowerBound = Integer.parseInt(respRateRange.get("lowerBound"));
-		int upperBound = Integer.parseInt(respRateRange.get("upperBound"));
-		int bufferCounter = Integer.parseInt(respRateRange.get("bufferCounter"));
+	public void checkRespiratoryRate(String respRate) throws RemoteException{
+		int lowerBound = Integer.parseInt(respRateRange.get(LOWER_BOUND_KEY));
+		int upperBound = Integer.parseInt(respRateRange.get(UPPER_BOUND_KEY));
+		int bufferCounter = Integer.parseInt(respRateRange.get(BUFFER_KEY));
 		int currentRate = Integer.parseInt(respRate);
 		
 		// check to see if respiratory rate is too low
@@ -133,14 +144,14 @@ public class DataInterpreter {
 					// generate a level1 alarm
 					alarmHandler.generateAlarm(1,"Respiratory Rate","low");
 					bufferCounter++;
-					respRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+					respRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 				}
 				// else you need to generate a level2 alarm after having 5 consecutive buffer
 				// range measurements.
 				else {
 					alarmHandler.generateAlarm(2, "Respiratory Rate", "low");
 						bufferCounter = 0;
-						respRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+						respRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 					}
 						
 				}
@@ -148,7 +159,7 @@ public class DataInterpreter {
 				else {
 					alarmHandler.generateAlarm(3, "Respiratory Rate", "low");
 					bufferCounter = 0;
-					respRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+					respRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 				}
 					
 			}
@@ -164,27 +175,27 @@ public class DataInterpreter {
 						// generate a level1 alarm
 						alarmHandler.generateAlarm(1, "Respiratory Rate", "high");
 						bufferCounter++;
-						respRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+						respRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 					}
 					// else you need to generate level2 alarm after having 5 consecutive buffer
 					// range measurements.
 					else {
 						alarmHandler.generateAlarm(2,"Respiratory Rate","high");
 						bufferCounter = 0;
-						respRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+						respRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 					}
 				}
 				// you are outside of the buffer range and too high, so generate a level3 alarm.
 				else {
 					alarmHandler.generateAlarm(3, "Respiratory Rate","high");
 					bufferCounter = 0;
-					respRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+					respRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 				}
 			}
 			// you have a normal respiratory rate measurement, make sure you reset the buffer
 			else {
 				bufferCounter = 0;
-				respRateRange.put("bufferCounter", Integer.toString(bufferCounter));
+				respRateRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 			}
 	}
 	
@@ -195,11 +206,12 @@ public class DataInterpreter {
 	 * cause an alarm to be sent to the nurse's station.
 	 * 
 	 * @param bloodPressure
+	 * @throws RemoteException 
 	 */
-	public void checkBloodPressure(String bloodPressure){
-		int lowerBound = Integer.parseInt(bpRange.get("lowerBound"));
-		int upperBound = Integer.parseInt(bpRange.get("upperBound"));
-		int bufferCounter = Integer.parseInt(bpRange.get("bufferCounter"));
+	public void checkBloodPressure(String bloodPressure) throws RemoteException{
+		int lowerBound = Integer.parseInt(bpRange.get(LOWER_BOUND_KEY));
+		int upperBound = Integer.parseInt(bpRange.get(UPPER_BOUND_KEY));
+		int bufferCounter = Integer.parseInt(bpRange.get(BUFFER_KEY));
 		int currentRate = Integer.parseInt(bloodPressure);
 		
 		
@@ -216,14 +228,14 @@ public class DataInterpreter {
 						// generate a level1 alarm
 						alarmHandler.generateAlarm(1,"Blood Pressure","low");
 						bufferCounter++;
-						bpRange.put("bufferCounter", Integer.toString(bufferCounter));
+						bpRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 					}
 					// else you need to generate a level2 alarm after having 5 consecutive buffer
 					// range measurements.
 					else {
 						alarmHandler.generateAlarm(2, "Blood Pressure", "low");
 							bufferCounter = 0;
-							bpRange.put("bufferCounter", Integer.toString(bufferCounter));
+							bpRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 						}
 							
 					}
@@ -231,7 +243,7 @@ public class DataInterpreter {
 					else {
 						alarmHandler.generateAlarm(3, "Blood Pressure", "low");
 						bufferCounter = 0;
-						bpRange.put("bufferCounter", Integer.toString(bufferCounter));
+						bpRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 					}
 						
 				}
@@ -247,27 +259,27 @@ public class DataInterpreter {
 							// generate a level1 alarm
 							alarmHandler.generateAlarm(1, "Blood Pressure", "high");
 							bufferCounter++;
-							bpRange.put("bufferCounter", Integer.toString(bufferCounter));
+							bpRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 						}
 						// else you need to generate level2 alarm after having 5 consecutive buffer
 						// range measurements.
 						else {
 							alarmHandler.generateAlarm(2,"Blood Pressure","high");
 							bufferCounter = 0;
-							bpRange.put("bufferCounter", Integer.toString(bufferCounter));
+							bpRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 						}
 					}
 					// you are outside of the buffer range and too high, so generate a level3 alarm.
 					else {
 						alarmHandler.generateAlarm(3, "Blood Pressure","high");
 						bufferCounter = 0;
-						bpRange.put("bufferCounter", Integer.toString(bufferCounter));
+						bpRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 					}
 				}
 				// you have a normal blood pressure measurement, make sure you reset the buffer
 				else {
 					bufferCounter = 0;
-					bpRange.put("bufferCounter", Integer.toString(bufferCounter));
+					bpRange.put(BUFFER_KEY, Integer.toString(bufferCounter));
 				}
 	}
 	
