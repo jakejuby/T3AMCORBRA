@@ -10,18 +10,20 @@ import model.data.BedsideData;
 import monitor.shared.DataReceiver;
 
 public class UpdateTask extends Thread {
-
+	
 	private boolean cancel;
 	private Map<String, Integer> subscription;
 	private DataReceiver to;
 	private int counter;
 	private String name;
+	private int clearAlarm;
 	
-	public UpdateTask(String name, Map<String, Integer> subscription, DataReceiver to) {
+	public UpdateTask(String name, Map<String, Integer> subscription, DataReceiver to, int autoClearAlarm) {
 		this.subscription = subscription;
 		this.to = to;
 		this.name = name;
 		cancel = false;
+		clearAlarm = autoClearAlarm;
 		
 		this.start();
 	}
@@ -45,6 +47,14 @@ public class UpdateTask extends Thread {
 				}
 			}
 
+			if( clearAlarm > 0 && (counter & 0xFFFF) != 0 && (counter & 0xFFFF) % clearAlarm == 0 ) {
+				try {
+					to.clearAlarm(name);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+			
 			try {
 				//if theres updates to send; send it
 				if( !values.keySet().isEmpty() )

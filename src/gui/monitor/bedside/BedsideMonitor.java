@@ -136,6 +136,6 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 		if (updateTask != null)
 			updateTask.cancel();
 
-		updateTask = new UpdateTask(this.toString(), subscription, nurseStation);
+		updateTask = new UpdateTask(this.toString(), subscription, nurseStation, -1);
 	}
 }
