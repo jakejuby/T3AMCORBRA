@@ -15,7 +15,7 @@ public class BedsideTestMain {
 			BedsideMonitor bm = new BedsideMonitor();
 			bm.setVisible(true);
 			
-			PatientSim ps = new PatientSim(bm, 50, 1000, 1);
+			PatientSim ps = new PatientSim(bm, 1, 1000, 1);
 			Thread.sleep(30000);
 			
 			ps.cancel();

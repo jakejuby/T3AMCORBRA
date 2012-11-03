@@ -55,7 +55,8 @@ public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 	@Override
 	public void addDataProvider(String bedside, DataProvider monitor) {
 		try {
-			monitor.subscribe(defaultSubscriptio(monitor.getSensors()));
+			System.out.println("DataProvider found; subscribing...");
+			monitor.subscribe(defaultSubscription(monitor.getSensors()));
 			monitors.put(bedside, monitor);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -67,7 +68,7 @@ public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 	 * @param sensors
 	 * @return
 	 */
-	private Map<String, Integer> defaultSubscriptio(List<String> sensors) {
+	private Map<String, Integer> defaultSubscription(List<String> sensors) {
 		Map<String, Integer> subs = new HashMap<String, Integer>();
 		for(String s : sensors) {
 			subs.put(s, 3);
