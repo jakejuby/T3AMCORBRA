@@ -4,9 +4,28 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Map;
 
+/**
+ * DataReceivers can set alarms and calls as well as clear them via the clearAlarm function.
+ * @author jeff
+ */
 public interface DataReceiver extends Remote {
 
+	/**
+	 * 
+	 * @param bedside
+	 * @param message
+	 * @throws RemoteException
+	 */
 	void setAlarm(String bedside, String message) 
+		throws RemoteException;
+	
+	/**
+	 * 
+	 * @param bedside
+	 * @param message
+	 * @throws RemoteException
+	 */
+	void setRequest(String bedside, String message) 
 		throws RemoteException;
 	
 	/**

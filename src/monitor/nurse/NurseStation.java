@@ -9,6 +9,13 @@ import java.util.Map;
 import monitor.shared.DataProvider;
 import monitor.shared.DataReceiver;
 
+/**
+ * The NurseStation is a remote object that can receive alarms and data.
+ * It is used to remotely monitor BedsideMonitor objects which update it based
+ * on a subscription to its available sensors.
+ * 
+ * @author jeff
+ */
 public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 
 	private Map<String, DataProvider> monitors = new HashMap<String, DataProvider>();
@@ -67,5 +74,11 @@ public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 		}
 		
 		return subs;
+	}
+
+	@Override
+	public void setRequest(String bedside, String message)
+			throws RemoteException {
+		System.out.println("Call request: " + message);
 	}
 }

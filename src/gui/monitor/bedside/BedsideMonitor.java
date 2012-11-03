@@ -3,12 +3,8 @@ package gui.monitor.bedside;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.ServerException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +14,19 @@ import javax.swing.JFrame;
 
 import model.data.BedsideData;
 import model.data.BedsideData.PropertyName;
+import monitor.bedside.AlarmHandler;
+import monitor.bedside.DataInterpreter;
 import monitor.bedside.UpdateTask;
 import monitor.shared.DataProvider;
 import monitor.shared.DataReceiver;
 
+/**
+ * BedsideMonitor is the provider of data to the nursestation.
+ * It contains the GUI component if desired; it can also be run
+ * headless for testing purposes.
+ * 
+ * @author jeff; greg
+ */
 public class BedsideMonitor extends UnicastRemoteObject implements DataProvider {
 
 	private static final long serialVersionUID = 1L;
@@ -32,7 +37,9 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 	private List<String> sensors;
 	private UpdateTask updateTask;
 	private DataReceiver nurseStation;
-
+	private AlarmHandler alarm;
+	private DataInterpreter dataInt;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -66,9 +73,15 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 
 		getNurseStation();
 
+		alarm = new AlarmHandler(this, nurseStation);
+		dataInt = new DataInterpreter(alarm);
+		
 		initialize();
 	}
 
+	/**
+	 * private helper to retrieve the nurses station from the RMI registry
+	 */
 	private void getNurseStation() {
 		try {
 			nurseStation = (DataReceiver) Naming
@@ -97,15 +110,27 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 		frame.getContentPane().add(vitalInfopanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Get the reference to the patient data for adding readings.
+	 * 
+	 * @return the patient data to add or retrieve readings
+	 */
 	public BedsideData getData() {
 		return patientData;
 	}
 
+	/**
+	 * Get the list of sensors which can provide data.
+	 */
 	@Override
 	public List<String> getSensors() {
 		return sensors;
 	}
 
+	/**
+	 * Set the subscription to the sensors available; this will generate a new 
+	 * UpdateTask thread with the proper subscription info.
+	 */
 	@Override
 	public void subscribe(Map<String, Integer> subscription) {
 		if (updateTask != null)
