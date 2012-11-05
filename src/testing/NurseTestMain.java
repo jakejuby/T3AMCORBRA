@@ -15,7 +15,7 @@ public class NurseTestMain {
 	public static void main(String[] args) {
 		NurseStation server;
 		try {
-			server = new NurseStation();
+			server = new NurseStation(true);
 			Naming.rebind("nurse-station", server);
 			
 			System.out.println("Nurse's Station Started...");
