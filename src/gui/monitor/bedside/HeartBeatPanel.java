@@ -3,6 +3,7 @@
  */
 package gui.monitor.bedside;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 
@@ -26,8 +27,8 @@ public class HeartBeatPanel extends JPanel {
 	 * @param layout
 	 * @param patientData
 	 */
-	public HeartBeatPanel(LayoutManager layout) {
-		super(layout);
+	public HeartBeatPanel() {
+		super(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		labelButtonWrapper = new JPanel();
 		add(labelButtonWrapper);
 		labelButtonWrapper.setLayout(new GridLayout(2, 2, 2, 2));

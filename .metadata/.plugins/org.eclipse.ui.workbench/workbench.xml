@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="28" version="2.0">
+<workbench progressCount="27" version="2.0">
 <workbenchAdvisor/>
 <window height="768" maximized="true" width="1024" x="100" y="100">
 <fastViewData fastViewLocation="1024"/>
@@ -8,7 +8,7 @@
 </perspectiveBar>
 <coolbarLayout>
 <coolItem id="group.file" itemType="typeGroupMarker"/>
-<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="160" y="22"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="214" y="22"/>
 <coolItem id="additions" itemType="typeGroupMarker"/>
 <coolItem id="adt.actionSet.avdManager" itemType="typeToolBarContribution" x="61" y="22"/>
 <coolItem id="adt.actionSet.lint" itemType="typeToolBarContribution" x="53" y="22"/>
@@ -70,6 +70,7 @@
 <child filterId="org.eclipse.jdt.internal.ui.PackageExplorer.HideInnerClassFilesFilter" isEnabled="true"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.NonPublicFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer_patternFilterId_.*" isEnabled="true"/>
+<child filterId="sf.eclipse.javacc.filters.FilterGeneratedJavaCCFiles" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.EmptyLibraryContainerFilter" isEnabled="true"/>
 <child filterId="org.eclipse.pde.ui.BinaryProjectFilter1" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.SyntheticMembersFilter" isEnabled="true"/>
@@ -129,6 +130,7 @@
 <alwaysOnActionSet id="org.eclipse.debug.ui.breakpointActionSet"/>
 <alwaysOnActionSet id="org.eclipse.jdt.debug.ui.JDTDebugActionSet"/>
 <alwaysOnActionSet id="org.eclipse.jdt.junit.JUnitActionSet"/>
+<alwaysOnActionSet id="com.google.gdt.eclipse.designer.actionset"/>
 <show_view_action id="org.eclipse.jdt.ui.PackageExplorer"/>
 <show_view_action id="org.eclipse.jdt.ui.TypeHierarchy"/>
 <show_view_action id="org.eclipse.jdt.ui.SourceView"/>

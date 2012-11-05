@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 
 import model.data.BedsideData;
 import model.data.BedsideData.PropertyName;
+import model.data.Patient;
 import monitor.bedside.AlarmHandler;
 import monitor.bedside.DataInterpreter;
 import monitor.bedside.UpdateTask;
@@ -39,6 +40,8 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 	private DataReceiver nurseStation;
 	private AlarmHandler alarm;
 	private DataInterpreter dataInt;
+
+	private Patient patient = new Patient();
 	
 	/**
 	 * Launch the application.
@@ -101,7 +104,7 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 		frame.setBounds(100, 100, 1036, 740);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		patientPanel = new PatientPanel(new GridLayout(0, 1, 0, 0));
+		patientPanel = new PatientPanel(new GridLayout(0, 1, 0, 0), patient );
 
 		frame.getContentPane().add(patientPanel, BorderLayout.WEST);
 

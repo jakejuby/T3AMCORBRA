@@ -4,7 +4,6 @@
 package model.data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author Knoxie
@@ -15,7 +14,13 @@ public class Patient {
 	private String firstName = "John";
 	private String lastName = "Doe";
 	private String birthdate = "Jan 23, 1996";
-	private ArrayList<String> allergies = (ArrayList<String>) Arrays.asList("Latex", "Penicillin");
+	private ArrayList<String> allergies = new ArrayList<String>() {
+		{
+			add("Latex");
+			add("Penicillin");
+		}
+	};
+	private String bloodType = "A+";
 
 	/**
 	 * 
@@ -86,6 +91,7 @@ public class Patient {
 
 	/**
 	 * Add allergy to patient info
+	 * 
 	 * @param allergy
 	 */
 	public void addAllergy(String allergy) {
@@ -94,10 +100,19 @@ public class Patient {
 
 	/**
 	 * 
-	 * @param allergy The allergy to remove
+	 * @param allergy
+	 *            The allergy to remove
 	 * @return True if removed
 	 */
 	public boolean removeAllergy(String allergy) {
 		return this.allergies.remove(allergy);
+	}
+
+	public String getBloodType() {
+		return bloodType;
+	}
+
+	public void setBloodType(String bloodType) {
+		this.bloodType = bloodType;
 	}
 }
