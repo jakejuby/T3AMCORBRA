@@ -3,6 +3,7 @@
  */
 package gui.monitor.bedside;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 
@@ -24,8 +25,8 @@ public class BloodPressurePanel extends JPanel {
 	/**
 	 * @param layout
 	 */
-	public BloodPressurePanel(LayoutManager layout) {
-		super(layout);
+	public BloodPressurePanel() {
+		super(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		labelButtonWrapper = new JPanel();
 		add(labelButtonWrapper);
 		labelButtonWrapper.setLayout(new GridLayout(2, 2, 2, 2));

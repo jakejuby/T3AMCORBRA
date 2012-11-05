@@ -3,6 +3,8 @@
  */
 package gui.monitor.bedside;
 
+import gui.monitor.shared.InformationPanel;
+
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.LayoutManager;
@@ -16,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import model.data.BedsideData;
+import model.data.Patient;
 
 /**
  * @author Knoxie
@@ -28,7 +31,7 @@ public class PatientPanel extends JPanel implements MouseListener {
 	/**
 	 * @param layout
 	 */
-	public PatientPanel(LayoutManager layout) {
+	public PatientPanel(LayoutManager layout, Patient patient) {
 		super(layout);
 
 		CallNursePanel callNursePanel = new CallNursePanel();
@@ -40,8 +43,8 @@ public class PatientPanel extends JPanel implements MouseListener {
 		nurseCallPanel.add(new Label("Call Nurse"));
 		add(nurseCallPanel);
 
-		JScrollPane patientInfoScroller = new JScrollPane();
-		add(patientInfoScroller);
+		InformationPanel panel = new InformationPanel(patient);
+		add(panel);
 
 	}
 

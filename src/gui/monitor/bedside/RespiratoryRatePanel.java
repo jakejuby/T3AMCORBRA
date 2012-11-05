@@ -3,6 +3,7 @@
  */
 package gui.monitor.bedside;
 
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 
@@ -25,8 +26,8 @@ public class RespiratoryRatePanel extends JPanel {
 	/**
 	 * @param layout
 	 */
-	public RespiratoryRatePanel(LayoutManager layout) {
-		super(layout);
+	public RespiratoryRatePanel() {
+		super(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		labelButtonWrapper = new JPanel();
 		add(labelButtonWrapper);

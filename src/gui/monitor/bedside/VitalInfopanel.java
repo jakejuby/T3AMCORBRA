@@ -32,13 +32,13 @@ public class VitalInfopanel extends JPanel implements PropertyChangeListener {
 		super(layout);
 		this.patientData = patientData;
 
-		heartBeatPanel = new HeartBeatPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		heartBeatPanel = new HeartBeatPanel();
 		add(heartBeatPanel);
 
-		bloodPressurePanel = new BloodPressurePanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		bloodPressurePanel = new BloodPressurePanel();
 		add(bloodPressurePanel);
 
-		respPanel = new RespiratoryRatePanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		respPanel = new RespiratoryRatePanel();
 		add(respPanel);
 
 		add(new AlarmControlsPanel(new FlowLayout()));
