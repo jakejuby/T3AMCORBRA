@@ -28,7 +28,7 @@ import monitor.shared.DataReceiver;
  * It contains the GUI component if desired; it can also be run
  * headless for testing purposes.
  * 
- * @author jeff; greg
+ * @author jeff; greg; jake
  */
 public class BedsideMonitor extends UnicastRemoteObject implements DataProvider {
 

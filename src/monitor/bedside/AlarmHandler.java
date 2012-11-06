@@ -6,7 +6,7 @@ import monitor.shared.DataProvider;
 import monitor.shared.DataReceiver;
 
 /**
- * Submits alarm and call related method invokations to the NurseStation
+ * Submits alarm and call related method invocations to the NurseStation
  * Only allows one call to
  * 
  * @author jeff
