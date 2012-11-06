@@ -11,6 +11,7 @@ import monitor.shared.DataReceiver;
 
 public class UpdateTask extends Thread {
 	
+	private static final long POLL_PERIOD = 250;
 	private boolean cancel;
 	private Map<String, Integer> subscription;
 	private DataReceiver to;
@@ -46,13 +47,13 @@ public class UpdateTask extends Thread {
 				}
 			}
 
-//			if( clearAlarm > 0 && (counter & 0xFFFF) != 0 && (counter & 0xFFFF) % clearAlarm == 0 ) {
-//				try {
-//					to.clearAlarm(self.toString());
-//				} catch (RemoteException e) {
-//					e.printStackTrace();
-//				}
-//			}
+			if( clearAlarm > 0 && (counter & 0xFFFF) != 0 && (counter & 0xFFFF) % clearAlarm == 0 ) {
+				try {
+					to.clearAlarm(self.toString());
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
 			
 			try {
 				//if theres updates to send; send it
@@ -64,7 +65,7 @@ public class UpdateTask extends Thread {
 			}
 			
 			try {
-				sleep(1000);
+				sleep(POLL_PERIOD);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
