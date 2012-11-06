@@ -3,6 +3,8 @@ package gui.monitor.bedside;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -26,13 +28,14 @@ import monitor.shared.DataReceiver;
  * It contains the GUI component if desired; it can also be run
  * headless for testing purposes.
  * 
- * @author jeff; greg
+ * @author jeff; greg; jake
  */
 public class BedsideMonitor extends UnicastRemoteObject implements DataProvider {
 
 	private static final long serialVersionUID = 1L;
 
 	private JFrame frame;
+	private VitalInfopanel vitalInfopanel;
 	private PatientPanel patientPanel;
 	private BedsideData patientData;
 	private List<String> sensors;
@@ -80,6 +83,18 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 		dataInt = new DataInterpreter(alarm);
 		
 		initialize();
+		
+		for(BedsideData.PropertyName p : BedsideData.PropertyName.values()) {
+			patientData.addPropertyChangeListener(p.toString(), dataInt);
+		}
+		dataInt.setBPRateRangeValue(DataInterpreter.UPPER_BOUND_KEY, "65");
+		dataInt.setBPRateRangeValue(DataInterpreter.LOWER_BOUND_KEY, "55");
+
+		dataInt.setHeartRateRangeValue(DataInterpreter.UPPER_BOUND_KEY, "65");
+		dataInt.setHeartRateRangeValue(DataInterpreter.LOWER_BOUND_KEY, "55");
+
+		dataInt.setRespRateRangeValue(DataInterpreter.UPPER_BOUND_KEY, "65");
+		dataInt.setRespRateRangeValue(DataInterpreter.LOWER_BOUND_KEY, "55");
 	}
 
 	/**
@@ -108,7 +123,7 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 
 		frame.getContentPane().add(patientPanel, BorderLayout.WEST);
 
-		VitalInfopanel vitalInfopanel = new VitalInfopanel(new GridLayout(0, 1,
+		vitalInfopanel = new VitalInfopanel(new GridLayout(0, 1,
 				0, 0), patientData);
 		frame.getContentPane().add(vitalInfopanel, BorderLayout.CENTER);
 	}

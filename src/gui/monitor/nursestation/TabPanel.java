@@ -41,7 +41,7 @@ public class TabPanel extends JPanel implements ActionListener {
 		breath = new RespiratoryRatePanel();
 		add(new JPanel() {
 			{
-				add(new showPatientPicture());
+				add(new ShowPatientPicture());
 				add(new InformationPanel(pat));
 			}
 		});

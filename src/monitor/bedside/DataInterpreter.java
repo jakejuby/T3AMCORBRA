@@ -1,13 +1,17 @@
 package monitor.bedside;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.util.HashMap;
+
+import model.data.BedsideData;
 
 /**
  * Determines if readings are out of range; generates alarms with some kind of
  * algorithm.
  */
-public class DataInterpreter {
+public class DataInterpreter implements PropertyChangeListener {
 	// Maps to hold onto our ranges for our measurements.
 	private HashMap<String,String> heartRateRange;
 	private HashMap<String,String> respRateRange;
@@ -319,6 +323,27 @@ public class DataInterpreter {
 	 */
 	public void setBPRateRangeValue(String rangeValueKey, String rangeValue){
 		bpRange.put(rangeValueKey, rangeValue);
+	}
+
+	@Override
+	/**
+	 * The method that reacts to changed properties in the BedsideData class
+	 * 
+	 * @param evt  The event that is fired from BedsideData
+	 */
+	public void propertyChange(PropertyChangeEvent evt) {
+		try {
+			if( evt.getPropertyName().equals("HeartBeat") ) {
+				this.checkHeartRate(evt.getNewValue().toString());
+			} else if( evt.getPropertyName().equals("BloodPressure") ) {
+				this.checkBloodPressure(evt.getNewValue().toString());
+			} else if ( evt.getPropertyName().equals("RespiratoryRate")  ) {
+				this.checkRespiratoryRate(evt.getNewValue().toString());
+			}
+		} catch (RemoteException re) {
+			//ignore
+			System.out.println("RMI, you son of a bitch");
+		}
 	}
 
 }
