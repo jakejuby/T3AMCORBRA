@@ -17,13 +17,13 @@ import javax.swing.JPanel;
  * @author Knoxie
  * 
  */
-public class showPatientPicture extends JPanel {
+public class ShowPatientPicture extends JPanel {
 
 	private File imageFile;
 	private BufferedImage image;
 	private JLabel picLabel;
 
-	public showPatientPicture() {
+	public ShowPatientPicture() {
 		super(new FlowLayout(FlowLayout.CENTER));
 		try {
 

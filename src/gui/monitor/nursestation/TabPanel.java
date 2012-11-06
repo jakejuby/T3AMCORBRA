@@ -32,7 +32,7 @@ public class TabPanel extends JPanel {
 		breath = new RespiratoryRatePanel();
 		add(new JPanel() {
 			{
-				add(new showPatientPicture());
+				add(new ShowPatientPicture());
 				add(new InformationPanel(new Patient()));
 			}
 		});

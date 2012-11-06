@@ -326,6 +326,11 @@ public class DataInterpreter implements PropertyChangeListener {
 	}
 
 	@Override
+	/**
+	 * The method that reacts to changed properties in the BedsideData class
+	 * 
+	 * @param evt  The event that is fired from BedsideData
+	 */
 	public void propertyChange(PropertyChangeEvent evt) {
 		try {
 			if( evt.getPropertyName().equals("HeartBeat") ) {
