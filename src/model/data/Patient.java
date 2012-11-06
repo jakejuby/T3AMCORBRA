@@ -22,11 +22,17 @@ public class Patient {
 	};
 	private String bloodType = "A+";
 
+	public Patient(){
+		
+	}
 	/**
 	 * 
 	 */
-	public Patient() {
-		// TODO Auto-generated constructor stub
+	public Patient(String first, String last, String birthdate, ArrayList<String> allergies) {
+		this.setFirstName(first);
+		this.setLastName(last);
+		this.setBirthdate(birthdate);
+		this.setAllergies(allergies);
 	}
 
 	/**

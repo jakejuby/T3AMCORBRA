@@ -12,7 +12,7 @@ import model.data.Patient;
 public class NursesStation {
 
 	private JFrame frame;
-	PatientTabPane tabbedPane;
+	static PatientTabPane tabbedPane;
 
 	/**
 	 * Launch the application.

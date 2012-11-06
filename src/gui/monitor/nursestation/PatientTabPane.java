@@ -1,11 +1,7 @@
 package gui.monitor.nursestation;
 
-import gui.monitor.bedside.PatientPanel;
-
-import java.awt.GridLayout;
 import java.util.ArrayList;
 
-import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 
 import model.data.Patient;
@@ -16,6 +12,7 @@ public class PatientTabPane extends JTabbedPane {
 	 */
 	public PatientTabPane(int left) {
 		super(left);
+		add("Admit patient", new admitPatientPanel(this));
 
 	}
 
