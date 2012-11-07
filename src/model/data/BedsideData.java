@@ -3,6 +3,8 @@
  */
 package model.data;
 
+import gui.monitor.bedside.BedsideMonitor;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -21,11 +23,17 @@ public class BedsideData {
 	private int maxHeartbeatHistoryVals = 20;
 	private int maxBloodPressureHistoryVals = 20;
 	private int maxRespiratoryRateHistoryVals = 20;
+	
+	private BedsideMonitor monitor;
 
 	public static enum PropertyName {
 		HeartBeat, BloodPressure, RespiratoryRate;
 	}
 
+	public BedsideData(BedsideMonitor monitor){
+		this.monitor = monitor;
+	}
+	
 	public ArrayList<String> getHeartBeatHistory() {
 		return hearbeatHistory;
 	}
@@ -39,6 +47,8 @@ public class BedsideData {
 	}
 
 	public void addHeartBeatValue(String newVal) {
+		monitor.vitalInfopanel.updateValue("heart", newVal);
+		
 		String oldVal = "";
 		if (hearbeatHistory.size() != 0)
 			oldVal = hearbeatHistory.get(hearbeatHistory.size() - 1);
@@ -50,6 +60,7 @@ public class BedsideData {
 	}
 
 	public void addBloodPressureValue(String newVal) {
+		monitor.vitalInfopanel.updateValue("bloodPressure", newVal);
 		String oldVal = "";
 		if (bloodPressureHistory.size() != 0)
 			oldVal = bloodPressureHistory.get(bloodPressureHistory.size() - 1);
@@ -61,6 +72,7 @@ public class BedsideData {
 	}
 
 	public void addRespiratoryRateValue(String newVal) {
+		monitor.vitalInfopanel.updateValue("respiratory", newVal);
 		String oldVal = "";
 		if (respiratoryRateHistory.size() != 0)
 			oldVal = respiratoryRateHistory.get(respiratoryRateHistory.size() - 1);

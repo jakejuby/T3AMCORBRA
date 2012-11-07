@@ -27,8 +27,8 @@ public class AlarmHandler {
 	public AlarmHandler(DataProvider bedside, DataReceiver station) {
 		this.station = station;
 		this.bedside = bedside;
-		inAlarm = false;
 		inCall = false;
+		inAlarm = false;
 	}
 
 	
@@ -37,10 +37,11 @@ public class AlarmHandler {
 	 * @throws RemoteException 
 	 */
 	public void generateAlarm(int level, String type, String problem) throws RemoteException {
-		if(!inAlarm) {
-			station.setAlarm(bedside.toString(), "Alarm level: " + level + "    " + type + "; " + problem);
+		if (!inAlarm){
+			station.setAlarm(bedside.toString(), "Alarm level: " + level + ";Type: " + type + "; " + problem);
 			inAlarm = true;
 		}
+		
 	}
 	
 	/**
@@ -60,6 +61,7 @@ public class AlarmHandler {
 	 */
 	public void clearAlarm() throws RemoteException {
 		station.clearAlarm(bedside.toString());
+		
 		inAlarm = false;
 		inCall = false;
 	}

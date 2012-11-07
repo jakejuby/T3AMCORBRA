@@ -28,7 +28,7 @@ public class VitalInfopanel extends JPanel implements PropertyChangeListener {
 	 * @param layout
 	 * @param patientData
 	 */
-	public VitalInfopanel(LayoutManager layout, BedsideData patientData) {
+	public VitalInfopanel(LayoutManager layout, BedsideData patientData, BedsideMonitor monitor) {
 		super(layout);
 		this.patientData = patientData;
 
@@ -41,7 +41,9 @@ public class VitalInfopanel extends JPanel implements PropertyChangeListener {
 		respPanel = new RespiratoryRatePanel();
 		add(respPanel);
 
-		add(new AlarmControlsPanel(new FlowLayout()));
+		add(new AlarmControlsPanel(new FlowLayout(), monitor));
+		
+		add(new PatientSimStart(new FlowLayout(), monitor));
 	}
 
 	public void setupSubscriptions() {
@@ -62,5 +64,18 @@ public class VitalInfopanel extends JPanel implements PropertyChangeListener {
 			System.out.println("No property action found.");
 		}
 
+	}
+	
+	
+	public void updateValue(String type, String value){
+		if (type.equalsIgnoreCase("heart")){
+			heartBeatPanel.updateCurrent(value);
+		}
+		else if (type.equalsIgnoreCase("bloodPressure")) {
+			bloodPressurePanel.updateCurrent(value);
+		}
+		else {
+			respPanel.updateCurrent(value);
+		}
 	}
 }

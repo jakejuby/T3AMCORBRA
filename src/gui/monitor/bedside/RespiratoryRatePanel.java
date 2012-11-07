@@ -3,6 +3,7 @@
  */
 package gui.monitor.bedside;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
@@ -22,6 +23,7 @@ public class RespiratoryRatePanel extends JPanel {
 	private JButton setAlarms;
 	private JLabel respRateLabel;
 	private JPanel labelButtonWrapper;
+	private JLabel alarm;
 
 	/**
 	 * @param layout
@@ -42,10 +44,36 @@ public class RespiratoryRatePanel extends JPanel {
 
 		currentRespRate = new JLabel("--RATE--");
 		add(currentRespRate);
+		
+		alarm = new JLabel("");
+		add(alarm);
 	}
 
 	public void setRespiratoryRateDisplay(String value) {
 		currentRespRate.setText(value);
+	}
+	
+	public void setAlarm(String level){
+		if (level.equalsIgnoreCase("level1")){
+			alarm.setText("Level 1 Alarm");
+			alarm.setForeground(Color.blue);
+		}
+		else if (level.equalsIgnoreCase("level2")){
+			alarm.setText("Level 2 Alarm");
+			alarm.setForeground(Color.yellow);
+		}
+		else if (level.equalsIgnoreCase("level3")){
+			alarm.setText("Level 3 Alarm");
+			alarm.setForeground(Color.red);
+		}
+		else {
+			alarm.setText("");
+			alarm.setForeground(Color.black);
+		}
+	}
+	
+	public void updateCurrent(String value){
+		currentRespRate.setText(value + " bpm");
 	}
 
 }

@@ -11,7 +11,10 @@ import java.awt.LayoutManager;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -21,18 +24,22 @@ import model.data.BedsideData;
 import model.data.Patient;
 
 /**
- * @author Knoxie
+ * @author Knoxie; Jared
  * 
  */
 public class PatientPanel extends JPanel implements MouseListener {
 
 	private JTable patientInfoTable;
+	private BedsideMonitor monitor;
+	public InformationPanel panel;
 
 	/**
 	 * @param layout
 	 */
-	public PatientPanel(LayoutManager layout, Patient patient) {
+	public PatientPanel(LayoutManager layout, Patient patient, BedsideMonitor monitor) {
 		super(layout);
+		
+		this.monitor = monitor;
 
 		CallNursePanel callNursePanel = new CallNursePanel();
 		add(callNursePanel);
@@ -43,7 +50,7 @@ public class PatientPanel extends JPanel implements MouseListener {
 		nurseCallPanel.add(new Label("Call Nurse"));
 		add(nurseCallPanel);
 
-		InformationPanel panel = new InformationPanel(patient);
+		panel = new InformationPanel(patient);
 		add(panel);
 
 	}
@@ -51,7 +58,7 @@ public class PatientPanel extends JPanel implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("I NEED A NURSE!!!!!!!!!!!!!!");
-
+		monitor.generateCall();
 	}
 
 	@Override

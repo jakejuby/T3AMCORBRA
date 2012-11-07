@@ -3,6 +3,7 @@
  */
 package gui.monitor.bedside;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
@@ -21,6 +22,7 @@ public class BloodPressurePanel extends JPanel {
 	private JButton setAlarms;
 	private JLabel bloodPressureLabel;
 	private JLabel currentPressure;
+	private JLabel alarm;
 
 	/**
 	 * @param layout
@@ -40,11 +42,38 @@ public class BloodPressurePanel extends JPanel {
 
 		currentPressure = new JLabel("--Pressure--");
 		add(currentPressure);
+		
+		alarm = new JLabel("");
+		add(alarm);
 	}
 
 	public void setBloodPressureDisplay(String value) {
 		currentPressure.setText(value);
 
 	}
+	
+	public void setAlarm(String level){
+		if (level.equalsIgnoreCase("level1")){
+			alarm.setText("Level 1 Alarm");
+			alarm.setForeground(Color.blue);
+		}
+		else if (level.equalsIgnoreCase("level2")){
+			alarm.setText("Level 2 Alarm");
+			alarm.setForeground(Color.yellow);
+		}
+		else if (level.equalsIgnoreCase("level3")){
+			alarm.setText("Level 3 Alarm");
+			alarm.setForeground(Color.red);
+		}
+		else {
+			alarm.setText("");
+			alarm.setForeground(Color.black);
+		}
+	}
+	
+	public void updateCurrent(String value){
+		currentPressure.setText(value + " mmHg");
+	}
+	
 
 }

@@ -10,6 +10,8 @@ import model.data.BedsideData;
 /**
  * Determines if readings are out of range; generates alarms with some kind of
  * algorithm.
+ * 
+ * @author jared; jeff
  */
 public class DataInterpreter implements PropertyChangeListener {
 	// Maps to hold onto our ranges for our measurements.
@@ -56,7 +58,7 @@ public class DataInterpreter implements PropertyChangeListener {
 			int difference = lowerBound - currentRate;
 			
 			// check to see if the rate is in the buffer range
-			if (difference >= 0 && difference <= 10){
+			if (difference >= 0 && difference <= 2){
 				
 				// if you've been in the buffer range for less than 5 measurements.
 				if (bufferCounter < 5){
@@ -88,7 +90,7 @@ public class DataInterpreter implements PropertyChangeListener {
 			int difference = currentRate - upperBound;
 			
 			// check to see if the rate is in the buffer range.
-			if (difference >= 0 && difference <= 10){
+			if (difference >= 0 && difference <= 2){
 				
 				// if you've been in the buffer range for less than 5 measurements.
 				if (bufferCounter < 5){
@@ -140,7 +142,7 @@ public class DataInterpreter implements PropertyChangeListener {
 			int difference = lowerBound - currentRate;
 					
 			// check to see if the rate is in the buffer range
-			if (difference >= 0 && difference <= 10){
+			if (difference >= 0 && difference <= 2){
 						
 			// if you've been in the buffer range for less than 5 measurements.
 			if (bufferCounter < 5){
@@ -172,7 +174,7 @@ public class DataInterpreter implements PropertyChangeListener {
 				int difference = currentRate - upperBound;
 					
 				// check to see if the rate is in the buffer range.
-				if (difference >= 0 && difference <= 10){
+				if (difference >= 0 && difference <= 2){
 						
 					// if you've been in the buffer range for less than 5 measurements.
 					if (bufferCounter < 5){
@@ -224,7 +226,7 @@ public class DataInterpreter implements PropertyChangeListener {
 			int difference = lowerBound - currentRate;
 							
 			// check to see if the blood pressure is in the buffer range
-				if (difference >= 0 && difference <= 10){
+				if (difference >= 0 && difference <= 2){
 								
 				// if you've been in the buffer range for less than 5 measurements.
 				if (bufferCounter < 5){
@@ -256,7 +258,7 @@ public class DataInterpreter implements PropertyChangeListener {
 					int difference = currentRate - upperBound;
 						
 					// check to see if the rate is in the buffer range.
-					if (difference >= 0 && difference <= 10){
+					if (difference >= 0 && difference <= 2){
 							
 						// if you've been in the buffer range for less than 5 measurements.
 						if (bufferCounter < 5){

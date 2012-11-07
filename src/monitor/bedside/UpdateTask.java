@@ -38,11 +38,17 @@ public class UpdateTask extends Thread {
 				// to the update.
 				if( (counter & 0xFFFF) != 0 && (counter & 0xFFFF) % subscription.get(s) == 0 ) {
 					if( s.equals(BedsideData.PropertyName.HeartBeat.toString()) ) {
-						values.put(s, self.getData().getHeartBeatHistory().get(self.getData().getHeartBeatHistory().size() - 1));
+						if (self.getData().getHeartBeatHistory().size() > 0){
+							values.put(s, self.getData().getHeartBeatHistory().get(self.getData().getHeartBeatHistory().size() - 1));
+						}
 					} else if( s.equals(BedsideData.PropertyName.BloodPressure.toString()) ) {
-						values.put(s, self.getData().getBloodPressureHistory().get(self.getData().getBloodPressureHistory().size() - 1));
+						if (self.getData().getBloodPressureHistory().size() > 0){
+							values.put(s, self.getData().getBloodPressureHistory().get(self.getData().getBloodPressureHistory().size() - 1));
+						}
 					} else if ( s.equals(BedsideData.PropertyName.RespiratoryRate.toString())  ) {
-						values.put(s, self.getData().getRespiratoryRateHistory().get(self.getData().getRespiratoryRateHistory().size() - 1));
+						if (self.getData().getRespiratoryRateHistory().size() > 0){
+							values.put(s, self.getData().getRespiratoryRateHistory().get(self.getData().getRespiratoryRateHistory().size() - 1));
+						}
 					}
 				}
 			}

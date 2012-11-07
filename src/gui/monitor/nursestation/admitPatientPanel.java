@@ -16,6 +16,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.data.Patient;
+import monitor.nurse.NurseStation;
 
 /**
  * @author Greg
@@ -29,11 +30,12 @@ public class admitPatientPanel extends JPanel implements ActionListener {
 	JTextArea allergies;
 	JButton admitButton;
 	PatientTabPane parent;
+	NurseStation station;
 
 	/**
 	 * Create new patient input panel
 	 */
-	public admitPatientPanel(PatientTabPane parent) {
+	public admitPatientPanel(PatientTabPane parent, NurseStation station) {
 		super();
 		JPanel panel = new JPanel(new GridLayout(0, 2, 10, 20));
 		this.parent = parent;
@@ -58,15 +60,28 @@ public class admitPatientPanel extends JPanel implements ActionListener {
 		panel.add(admitButton);
 		this.add(panel);
 		admitButton.addActionListener((ActionListener) this);
+		
+		this.station = station;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String[] allergiesList = allergies.getText().split(" ,");
+		Patient patient = new Patient(first_name.getText(), last_name.getText(),
+				birthdate.getText(), new ArrayList<String>(Arrays.asList(allergiesList)));
+		
 		parent.add(
 				last_name.getText() + ", " + first_name.getText(),
-				new TabPanel(new Patient(first_name.getText(), last_name
-						.getText(), birthdate.getText(), new ArrayList<String>(
-						Arrays.asList(allergiesList)))));
+				new TabPanel(patient));
+		
+		try{
+			gui.monitor.bedside.BedsideMonitor monitor = new gui.monitor.bedside.BedsideMonitor();
+		    monitor.setVisible(true);
+		    
+		    monitor.setPatient(patient);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 }

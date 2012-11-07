@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import javax.swing.JTabbedPane;
 
 import model.data.Patient;
+import monitor.nurse.NurseStation;
 
 public class PatientTabPane extends JTabbedPane {
 	/**
 	 * 
 	 */
-	public PatientTabPane(int left) {
+	public PatientTabPane(int left, NurseStation station) {
 		super(left);
-		add("Admit patient", new admitPatientPanel(this));
+		add("Admit patient", new admitPatientPanel(this,station));
 
 	}
 

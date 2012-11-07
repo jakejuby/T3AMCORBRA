@@ -50,4 +50,7 @@ public interface DataReceiver extends Remote {
 	 */
 	void addDataProvider(String bedside, DataProvider monitor)
 		throws RemoteException;
+	
+	
+	
 }

@@ -69,7 +69,7 @@ public class PatientSim extends Thread {
 				if(r.nextInt(2) == 1) {
 					monitor.getData().addHeartBeatValue("" + (65 + r.nextInt(10)));
 				} else {
-					monitor.getData().addBloodPressureValue("" + (15 + r.nextInt(10)));
+					monitor.getData().addHeartBeatValue("" + (15 + r.nextInt(10)));
 				}
 			} else {
 				monitor.getData().addHeartBeatValue("" + (45 + r.nextInt(10)));
@@ -79,7 +79,7 @@ public class PatientSim extends Thread {
 				if(r.nextInt(2) == 1) {
 					monitor.getData().addRespiratoryRateValue("" + (65 + r.nextInt(10)));
 				} else {
-					monitor.getData().addBloodPressureValue("" + (15 + r.nextInt(10)));
+					monitor.getData().addRespiratoryRateValue("" + (15 + r.nextInt(10)));
 				}
 			} else {
 				monitor.getData().addRespiratoryRateValue("" + (45 + r.nextInt(10)));

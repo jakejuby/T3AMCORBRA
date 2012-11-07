@@ -1,5 +1,7 @@
 package gui.monitor.bedside;
 
+import gui.monitor.shared.InformationPanel;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
+
+import testing.PatientSim;
 
 import model.data.BedsideData;
 import model.data.BedsideData.PropertyName;
@@ -28,21 +32,22 @@ import monitor.shared.DataReceiver;
  * It contains the GUI component if desired; it can also be run
  * headless for testing purposes.
  * 
- * @author jeff; greg; jake
+ * @author jeff; greg; jake; jared
  */
 public class BedsideMonitor extends UnicastRemoteObject implements DataProvider {
 
 	private static final long serialVersionUID = 1L;
 
 	private JFrame frame;
-	private VitalInfopanel vitalInfopanel;
+	public VitalInfopanel vitalInfopanel;
 	private PatientPanel patientPanel;
 	private BedsideData patientData;
 	private List<String> sensors;
 	private UpdateTask updateTask;
 	private DataReceiver nurseStation;
-	private AlarmHandler alarm;
+	public  AlarmHandler alarm;
 	private DataInterpreter dataInt;
+	public PatientSim simulator;
 
 	private Patient patient = new Patient();
 	
@@ -66,11 +71,24 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 		frame.setVisible(b);
 	}
 	
+	
+	/**
+	 * Called when patient clicks on the help button.
+	 */
+	public void generateCall(){
+		try{
+			alarm.generateCall();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Create the application.
 	 */
 	public BedsideMonitor() throws RemoteException {
-		patientData = new BedsideData();
+		patientData = new BedsideData(this);
 
 		sensors = new ArrayList<String>();
 		for (PropertyName p : PropertyName.values()) {
@@ -89,12 +107,17 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 		}
 		dataInt.setBPRateRangeValue(DataInterpreter.UPPER_BOUND_KEY, "65");
 		dataInt.setBPRateRangeValue(DataInterpreter.LOWER_BOUND_KEY, "55");
+		dataInt.setBPRateRangeValue(DataInterpreter.BUFFER_KEY, "0");
 
 		dataInt.setHeartRateRangeValue(DataInterpreter.UPPER_BOUND_KEY, "65");
 		dataInt.setHeartRateRangeValue(DataInterpreter.LOWER_BOUND_KEY, "55");
+		dataInt.setHeartRateRangeValue(DataInterpreter.BUFFER_KEY, "0");
 
 		dataInt.setRespRateRangeValue(DataInterpreter.UPPER_BOUND_KEY, "65");
 		dataInt.setRespRateRangeValue(DataInterpreter.LOWER_BOUND_KEY, "55");
+		dataInt.setRespRateRangeValue(DataInterpreter.BUFFER_KEY,"0");
+		
+		//simulator = new PatientSim(this,1,1000,1);
 	}
 
 	/**
@@ -103,7 +126,7 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 	private void getNurseStation() {
 		try {
 			nurseStation = (DataReceiver) Naming
-					.lookup("rmi://localhost/nurse-station");
+					.lookup("rmi://localhost:1099/nurse-station");
 			
 			nurseStation.addDataProvider(this.toString(), this);
 		} catch (Exception e) {
@@ -119,12 +142,12 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 		frame.setBounds(100, 100, 1036, 740);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		patientPanel = new PatientPanel(new GridLayout(0, 1, 0, 0), patient );
+		patientPanel = new PatientPanel(new GridLayout(0, 1, 0, 0), patient, this );
 
 		frame.getContentPane().add(patientPanel, BorderLayout.WEST);
 
 		vitalInfopanel = new VitalInfopanel(new GridLayout(0, 1,
-				0, 0), patientData);
+				0, 0), patientData, this);
 		frame.getContentPane().add(vitalInfopanel, BorderLayout.CENTER);
 	}
 
@@ -155,5 +178,11 @@ public class BedsideMonitor extends UnicastRemoteObject implements DataProvider 
 			updateTask.cancel();
 
 		updateTask = new UpdateTask(this, subscription, nurseStation, -1);
+	}
+	
+	public void setPatient(Patient patient){
+		this.patient = patient;
+		
+		patientPanel.panel = new InformationPanel(patient);
 	}
 }
