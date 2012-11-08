@@ -75,6 +75,7 @@ public class admitPatientPanel extends JPanel implements ActionListener {
 				new TabPanel(patient));
 		
 		try{
+			
 			gui.monitor.bedside.BedsideMonitor monitor = new gui.monitor.bedside.BedsideMonitor();
 		    monitor.setVisible(true);
 		    

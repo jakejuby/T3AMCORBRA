@@ -68,24 +68,25 @@ public class NurseStation extends UnicastRemoteObject implements DataReceiver {
 			}
 			else if (type.contains("Respiratory Rate")){
 				if (message.contains("Alarm level: 1")){
-					panel.blood.setAlarm("level1");
+					panel.breath.setAlarm("level1");
 				}
 				else if (message.contains("Alarm level: 2")) {
-					panel.blood.setAlarm("level2");
+					panel.breath.setAlarm("level2");
 				}
 				else{
-					panel.blood.setAlarm("level3");
+					panel.breath.setAlarm("level3");
 				}
 			}
+			 
 			else {
 				if (message.contains("Alarm level: 1")){
-					panel.blood.setAlarm("level1");
+					panel.heart.setAlarm("level1");
 				}
 				else if (message.contains("Alarm level: 2")) {
-					panel.blood.setAlarm("level2");
+					panel.heart.setAlarm("level2");
 				}
 				else {
-					panel.blood.setAlarm("level3");
+					panel.heart.setAlarm("level3");
 				}
 			}
 		

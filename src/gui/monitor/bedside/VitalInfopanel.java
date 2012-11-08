@@ -78,4 +78,24 @@ public class VitalInfopanel extends JPanel implements PropertyChangeListener {
 			respPanel.updateCurrent(value);
 		}
 	}
+	
+	public void setAlarm(String type, String value){
+		if (type.equalsIgnoreCase("heart")){
+			heartBeatPanel.setAlarm(value);
+		}
+		else if (type.equalsIgnoreCase("bloodPressure")){
+			bloodPressurePanel.setAlarm(value);
+		}
+		else if(type.equalsIgnoreCase("respiratory")) {
+			respPanel.setAlarm(value);
+		}
+		else {
+			heartBeatPanel.setAlarm("");
+			bloodPressurePanel.setAlarm("");
+			respPanel.setAlarm("");
+		}
+		
+	}
+	
+	
 }

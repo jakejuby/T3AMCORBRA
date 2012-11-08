@@ -37,8 +37,8 @@ public class BloodPressurePanel extends JPanel {
 		bloodPressureLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		labelButtonWrapper.add(bloodPressureLabel);
 
-		setAlarms = new JButton("Set Alarms");
-		labelButtonWrapper.add(setAlarms);
+		//setAlarms = new JButton("Set Alarms");
+		//labelButtonWrapper.add(setAlarms);
 
 		currentPressure = new JLabel("--Pressure--");
 		add(currentPressure);

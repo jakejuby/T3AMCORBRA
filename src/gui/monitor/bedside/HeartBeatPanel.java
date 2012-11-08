@@ -39,8 +39,8 @@ public class HeartBeatPanel extends JPanel {
 		heartBeatLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		labelButtonWrapper.add(heartBeatLabel);
 
-		alarmsButton = new JButton("Set Alarms");
-		labelButtonWrapper.add(alarmsButton);
+		//alarmsButton = new JButton("Set Alarms");
+		//labelButtonWrapper.add(alarmsButton);
 
 		currentBeatsLabel = new JLabel("--Beats--");
 		add(currentBeatsLabel);

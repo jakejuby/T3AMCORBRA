@@ -1,11 +1,11 @@
 package monitor.bedside;
 
+import gui.monitor.bedside.BedsideMonitor;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.rmi.RemoteException;
 import java.util.HashMap;
-
-import model.data.BedsideData;
 
 /**
  * Determines if readings are out of range; generates alarms with some kind of
@@ -21,6 +21,7 @@ public class DataInterpreter implements PropertyChangeListener {
 	
 	private AlarmHandler alarmHandler;
 	
+	
 	public static final String LOWER_BOUND_KEY = "lowerBound";
 	public static final String UPPER_BOUND_KEY = "upperBound";
 	public static final String BUFFER_KEY = "bufferCounter";
@@ -32,7 +33,11 @@ public class DataInterpreter implements PropertyChangeListener {
 		heartRateRange = new HashMap<String,String>();
 		respRateRange = new HashMap<String,String>();
 		bpRange = new HashMap<String,String>();
+		heartRateRange.put(BUFFER_KEY, 0+"");
+		respRateRange.put(BUFFER_KEY, 0+"");
+		bpRange.put(BUFFER_KEY, 0+"");
 		alarmHandler = alarms;
+		
 	}
 	
 	/**
@@ -58,7 +63,7 @@ public class DataInterpreter implements PropertyChangeListener {
 			int difference = lowerBound - currentRate;
 			
 			// check to see if the rate is in the buffer range
-			if (difference >= 0 && difference <= 2){
+			if (difference >= 0 && difference <= 5){
 				
 				// if you've been in the buffer range for less than 5 measurements.
 				if (bufferCounter < 5){
@@ -90,7 +95,7 @@ public class DataInterpreter implements PropertyChangeListener {
 			int difference = currentRate - upperBound;
 			
 			// check to see if the rate is in the buffer range.
-			if (difference >= 0 && difference <= 2){
+			if (difference >= 0 && difference <= 5){
 				
 				// if you've been in the buffer range for less than 5 measurements.
 				if (bufferCounter < 5){
@@ -142,7 +147,7 @@ public class DataInterpreter implements PropertyChangeListener {
 			int difference = lowerBound - currentRate;
 					
 			// check to see if the rate is in the buffer range
-			if (difference >= 0 && difference <= 2){
+			if (difference >= 0 && difference <= 5){
 						
 			// if you've been in the buffer range for less than 5 measurements.
 			if (bufferCounter < 5){
@@ -174,7 +179,7 @@ public class DataInterpreter implements PropertyChangeListener {
 				int difference = currentRate - upperBound;
 					
 				// check to see if the rate is in the buffer range.
-				if (difference >= 0 && difference <= 2){
+				if (difference >= 0 && difference <= 5){
 						
 					// if you've been in the buffer range for less than 5 measurements.
 					if (bufferCounter < 5){
@@ -226,7 +231,7 @@ public class DataInterpreter implements PropertyChangeListener {
 			int difference = lowerBound - currentRate;
 							
 			// check to see if the blood pressure is in the buffer range
-				if (difference >= 0 && difference <= 2){
+				if (difference >= 0 && difference <= 5){
 								
 				// if you've been in the buffer range for less than 5 measurements.
 				if (bufferCounter < 5){
@@ -258,7 +263,7 @@ public class DataInterpreter implements PropertyChangeListener {
 					int difference = currentRate - upperBound;
 						
 					// check to see if the rate is in the buffer range.
-					if (difference >= 0 && difference <= 2){
+					if (difference >= 0 && difference <= 5){
 							
 						// if you've been in the buffer range for less than 5 measurements.
 						if (bufferCounter < 5){

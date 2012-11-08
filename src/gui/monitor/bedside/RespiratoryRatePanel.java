@@ -39,8 +39,8 @@ public class RespiratoryRatePanel extends JPanel {
 		respRateLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		labelButtonWrapper.add(respRateLabel);
 
-		setAlarms = new JButton("Set Alarms");
-		labelButtonWrapper.add(setAlarms);
+		//setAlarms = new JButton("Set Alarms");
+		//labelButtonWrapper.add(setAlarms);
 
 		currentRespRate = new JLabel("--RATE--");
 		add(currentRespRate);

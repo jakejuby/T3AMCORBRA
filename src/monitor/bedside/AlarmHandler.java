@@ -1,5 +1,7 @@
 package monitor.bedside;
 
+import gui.monitor.bedside.BedsideMonitor;
+
 import java.rmi.RemoteException;
 
 import monitor.shared.DataProvider;
@@ -37,10 +39,20 @@ public class AlarmHandler {
 	 * @throws RemoteException 
 	 */
 	public void generateAlarm(int level, String type, String problem) throws RemoteException {
-		if (!inAlarm){
+	
 			station.setAlarm(bedside.toString(), "Alarm level: " + level + ";Type: " + type + "; " + problem);
-			inAlarm = true;
-		}
+			
+			BedsideMonitor monitor = (BedsideMonitor)this.bedside;
+			if (type.equalsIgnoreCase("Blood Pressure")){
+				monitor.vitalInfopanel.setAlarm("bloodPressure", "level"+level);
+			}
+			else if (type.equalsIgnoreCase("Respiratory Rate")){
+				monitor.vitalInfopanel.setAlarm("respiratory", "level" + level);
+			}
+			else {
+				monitor.vitalInfopanel.setAlarm("heart","level"+level);
+			}
+		
 		
 	}
 	
@@ -61,6 +73,8 @@ public class AlarmHandler {
 	 */
 	public void clearAlarm() throws RemoteException {
 		station.clearAlarm(bedside.toString());
+		BedsideMonitor monitor = (BedsideMonitor)this.bedside;
+		monitor.vitalInfopanel.setAlarm("","");
 		
 		inAlarm = false;
 		inCall = false;

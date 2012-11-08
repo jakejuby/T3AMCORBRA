@@ -52,7 +52,7 @@ public class NursesStation {
 		initialize();
 		tabbedPane.addPatients(new ArrayList<Patient>() {
 			{
-				//add(new Patient());
+				add(new Patient());
 			}
 		});
 		station.setUI(this);
